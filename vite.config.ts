@@ -5,6 +5,8 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // For GitHub Pages, set BASE_PATH (e.g. "/ROMBOR/") at build time
+  base: mode === "production" && process.env.BASE_PATH ? process.env.BASE_PATH : "/",
   server: {
     host: "::",
     port: 8080,
