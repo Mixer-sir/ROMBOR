@@ -58,16 +58,16 @@ export function ProductCard({ product }: { product: Product }) {
                   ))}
                 </ul>
               </div>
-              <Button className="mt-6 w-full" onClick={() => cart.add(product)}>
-                В корзину
+              <Button className="mt-6 w-full" disabled={cart.locked} onClick={() => cart.add(product)}>
+                {cart.locked ? "Подтвердите уведомление" : "В корзину"}
               </Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
       <div className="px-4 pb-4">
-        <Button variant="secondary" className="w-full" onClick={() => cart.add(product)}>
-          Добавить в корзину
+        <Button variant="secondary" className="w-full" disabled={cart.locked} onClick={() => cart.add(product)}>
+          {cart.locked ? "Подтвердите уведомление" : "Добавить в корзину"}
         </Button>
       </div>
     </div>
