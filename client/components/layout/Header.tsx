@@ -1,38 +1,51 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/store/cart";
+import { motion } from "framer-motion";
 
-function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-          isActive ? "bg-secondary text-foreground" : "text-foreground/80 hover:text-foreground hover:bg-secondary"
-        }`
-      }
-    >
-      {children}
-    </NavLink>
-  );
-}
+const NAV = [
+  { to: "/", label: "Главная" },
+  { to: "/assortment", label: "Ассортимент" },
+  { to: "/about", label: "О нас" },
+];
 
 export function Header() {
   const cart = useCart();
+  const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur">
+      <div className="bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent)] h-[1px]" />
       <div className="container mx-auto flex items-center justify-between h-16">
-        <Link to="/" className="font-extrabold tracking-[0.2em] text-xl">
+        <Link to="/" className="font-extrabold tracking-[0.25em] text-xl">
           <span className="text-primary">ROM</span>BOR
         </Link>
-        <nav className="hidden md:flex items-center gap-2">
-          <NavItem to="/assortment">Ассортимент</NavItem>
-          <NavItem to="/about">О нас</NavItem>
-          <NavItem to="/order">Заказ</NavItem>
+        <nav className="hidden md:flex items-center gap-1 relative">
+          {NAV.map((n) => {
+            const active = location.pathname === n.to || (n.to !== "/" && location.pathname.startsWith(n.to));
+            return (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  active ? "text-foreground" : "text-foreground/80 hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                <span className="relative">
+                  {n.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-0 -bottom-1 h-[2px] w-full bg-primary"
+                    />
+                  )}
+                </span>
+              </NavLink>
+            );
+          })}
         </nav>
         <div className="flex items-center gap-2">
           <Sheet>
@@ -46,7 +59,7 @@ export function Header() {
                 )}
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-[92vw] sm:w-[420px]">
+            <SheetContent className="w-[92vw] sm:w-[460px]">
               <SheetHeader>
                 <SheetTitle>Корзина</SheetTitle>
               </SheetHeader>
@@ -87,9 +100,7 @@ export function Header() {
                       <span className="text-lg font-semibold">{cart.total.toLocaleString("ru-RU")} ₽</span>
                     </div>
                     <div className="flex gap-2">
-                      <Link to="/order" className="flex-1">
-                        <Button className="w-full">Оформить</Button>
-                      </Link>
+                      <Button className="flex-1">Оформить заказ</Button>
                       <Button variant="secondary" onClick={cart.clear}>Очистить</Button>
                     </div>
                   </div>
