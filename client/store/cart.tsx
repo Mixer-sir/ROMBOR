@@ -36,7 +36,6 @@ export type CartContextValue = {
   count: number;
   total: number;
   locked: boolean;
-  unlock: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -50,13 +49,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [state]);
 
   const value = useMemo<CartContextValue>(() => {
-    const unlock = () => setLocked(false);
-
     const add = (product: Product, qty = 1) => {
       if (locked) {
-        toast.warning("Подтвердите предыдущее добавление", {
-          description: "Нажмите “Ок” в уведомлении, затем повторите.",
-        });
+        toast.info("Подождите 3 секунды", { description: "Защита от повторов", duration: 2000 });
         return;
       }
       setState((s) => {
@@ -75,12 +70,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return s;
       });
       setLocked(true);
+      setTimeout(() => setLocked(false), 3000);
       toast.success("Товар добавлен в корзину", {
         description: product.name,
-        action: {
-          label: "Ок",
-          onClick: () => unlock(),
-        },
+        duration: 5000,
       });
     };
 
@@ -101,7 +94,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const count = state.items.reduce((sum, i) => sum + i.quantity, 0);
     const total = state.items.reduce((sum, i) => sum + i.quantity * i.product.price, 0);
 
-    return { items: state.items, add, remove, setQty, clear, count, total, locked, unlock };
+    return { items: state.items, add, remove, setQty, clear, count, total, locked };
   }, [state, locked]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
