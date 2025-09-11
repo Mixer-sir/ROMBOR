@@ -117,7 +117,7 @@ export const expandedProducts: Product[] = [
     price: 31900,
     category: "Стеллажи",
     materials: ["Орех", "Сталь"],
-    description: "Модульные кубы с возможн��стью комбинирования.",
+    description: "Модульные кубы с возможностью комбинирования.",
     images: ["/images/products/cube-1.jpg", "/images/products/cube-2.jpg"],
   },
 
