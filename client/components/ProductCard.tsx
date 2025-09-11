@@ -59,7 +59,7 @@ export function ProductCard({ product }: { product: Product }) {
                 </ul>
               </div>
               <Button className="mt-6 w-full" disabled={cart.locked} onClick={() => cart.add(product)}>
-                {cart.locked ? "Подтвердите уведомление" : "В корзину"}
+                {cart.locked ? "Подождите 3 сек" : "В корзину"}
               </Button>
             </div>
           </div>
