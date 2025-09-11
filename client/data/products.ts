@@ -27,6 +27,6 @@ export const categories: { key: Category; label: string }[] = [
   { key: "Столы", label: "Столы" },
   { key: "Стулья", label: "Стулья" },
   { key: "Стеллажи", label: "Стеллажи" },
-  { key: "Д��кор", label: "Декор" },
+  { key: "Декор", label: "Декор" },
   { key: "Прочее", label: "Прочее" },
 ];
