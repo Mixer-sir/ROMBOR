@@ -54,7 +54,7 @@ export function ProductCard({ product }: { product: Product }) {
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">Материалы</p>
                 <ul className="mt-2 text-sm space-y-1">
                   {product.materials.map((m) => (
-                    <li key={m}>• {m}</li>
+                    <li key={m}>��� {m}</li>
                   ))}
                 </ul>
               </div>
@@ -67,7 +67,7 @@ export function ProductCard({ product }: { product: Product }) {
       </Dialog>
       <div className="px-4 pb-4">
         <Button variant="secondary" className="w-full" disabled={cart.locked} onClick={() => cart.add(product)}>
-          {cart.locked ? "Подтвердите уведомление" : "Добавить в корзину"}
+          {cart.locked ? "Подождите 3 сек" : "Добавить в корзину"}
         </Button>
       </div>
     </div>
