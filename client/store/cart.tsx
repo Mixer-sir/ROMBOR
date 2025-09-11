@@ -51,7 +51,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<CartContextValue>(() => {
     const add = (product: Product, qty = 1) => {
       if (locked) {
-        toast.info("Подождите 3 секунды", { description: "Защита от повторов", duration: 2000 });
+        toast.info("Подождите 3 секунды", {
+          description: "Защита от повторов",
+          duration: 2000,
+        });
         return;
       }
       setState((s) => {
@@ -78,13 +81,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     };
 
     const remove = (productId: string) => {
-      setState((s) => ({ items: s.items.filter((i) => i.product.id !== productId) }));
+      setState((s) => ({
+        items: s.items.filter((i) => i.product.id !== productId),
+      }));
     };
 
     const setQty = (productId: string, qty: number) => {
       setState((s) => ({
         items: s.items
-          .map((i) => (i.product.id === productId ? { ...i, quantity: Math.max(0, Math.min(99, qty)) } : i))
+          .map((i) =>
+            i.product.id === productId
+              ? { ...i, quantity: Math.max(0, Math.min(99, qty)) }
+              : i,
+          )
           .filter((i) => i.quantity > 0),
       }));
     };
@@ -92,9 +101,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const clear = () => setState({ items: [] });
 
     const count = state.items.reduce((sum, i) => sum + i.quantity, 0);
-    const total = state.items.reduce((sum, i) => sum + i.quantity * i.product.price, 0);
+    const total = state.items.reduce(
+      (sum, i) => sum + i.quantity * i.product.price,
+      0,
+    );
 
-    return { items: state.items, add, remove, setQty, clear, count, total, locked };
+    return {
+      items: state.items,
+      add,
+      remove,
+      setQty,
+      clear,
+      count,
+      total,
+      locked,
+    };
   }, [state, locked]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

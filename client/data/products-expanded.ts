@@ -22,8 +22,12 @@ export const expandedProducts: Product[] = [
     price: 72900,
     category: "Столы",
     materials: ["Массив ясень", "Сталь"],
-    description: "Стол с массивной столешницей и трапециевидной рамой из стали.",
-    images: ["/images/products/bastion-1.jpg", "/images/products/bastion-2.jpg"],
+    description:
+      "Стол с массивной столешницей и трапециевидной рамой из стали.",
+    images: [
+      "/images/products/bastion-1.jpg",
+      "/images/products/bastion-2.jpg",
+    ],
   },
   {
     id: "tbl-ark-003",
@@ -32,7 +36,8 @@ export const expandedProducts: Product[] = [
     price: 41900,
     category: "Столы",
     materials: ["Орех", "Сталь"],
-    description: "Компактный письменный стол с выдвижным ящиком и стальной рамой.",
+    description:
+      "Компактный письменный стол с выдвижным ящиком и стальной рамой.",
     images: ["/images/products/ark-1.jpg", "/images/products/ark-2.jpg"],
   },
   {
@@ -54,7 +59,8 @@ export const expandedProducts: Product[] = [
     price: 12900,
     category: "Стулья",
     materials: ["Металл", "Эко-кожа"],
-    description: "Эргономичный стул с мягкой посадкой и прочным металлическим каркасом.",
+    description:
+      "Эргономичный стул с мягкой посадкой и прочным металлическим каркасом.",
     images: ["/images/products/bordo-1.jpg", "/images/products/bordo-2.jpg"],
     featured: true,
   },
@@ -75,7 +81,8 @@ export const expandedProducts: Product[] = [
     price: 6900,
     category: "Стулья",
     materials: ["Стальная труба", "Дерево"],
-    description: "Табурет на базе стальной трубы с круглым сиденьем из массива.",
+    description:
+      "Табурет на базе стальной трубы с круглым сиденьем из массива.",
     images: ["/images/products/pipe-1.jpg"],
   },
   {
@@ -97,8 +104,12 @@ export const expandedProducts: Product[] = [
     price: 34900,
     category: "Стеллажи",
     materials: ["Сосна морёная", "Сталь"],
-    description: "Открытый стеллаж для гостиной и офиса. Регулируемые опоры, индустриальный стиль.",
-    images: ["/images/products/industrial-1.jpg", "/images/products/industrial-2.jpg"],
+    description:
+      "Открытый стеллаж для гостиной и офиса. Регулируемые опоры, индустриальный стиль.",
+    images: [
+      "/images/products/industrial-1.jpg",
+      "/images/products/industrial-2.jpg",
+    ],
   },
   {
     id: "shf-ladder-202",
@@ -129,7 +140,8 @@ export const expandedProducts: Product[] = [
     price: 8900,
     category: "Декор",
     materials: ["Сталь", "Масло"],
-    description: "Настенная полка из стали. Лаконичная форма и устойчивое покрытие под масло.",
+    description:
+      "Настенная полка из стали. Лаконичная форма и устойчивое покрытие под масло.",
     images: ["/images/products/steel-1.jpg"],
   },
   {

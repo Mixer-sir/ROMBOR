@@ -1,9 +1,4 @@
-export type Category =
-  | "Столы"
-  | "Стулья"
-  | "Стеллажи"
-  | "Декор"
-  | "Прочее";
+export type Category = "Столы" | "Стулья" | "Стеллажи" | "Декор" | "Прочее";
 
 export type Product = {
   id: string;
