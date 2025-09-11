@@ -75,6 +75,12 @@ export function Header() {
                           alt={item.product.name}
                           className="h-16 w-16 object-cover rounded"
                           loading="lazy"
+                          onError={(e) => {
+                            const t = e.currentTarget as HTMLImageElement & { dataset: any };
+                            if (t.dataset.fallback) return;
+                            t.dataset.fallback = "1";
+                            t.src = "/placeholder.svg";
+                          }}
                         />
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
