@@ -61,7 +61,7 @@ export default function Index() {
             </p>
             <div className="mt-6 flex gap-3">
               <Link to="/assortment"><Button>Ассортимент</Button></Link>
-              <Link to="/order"><Button variant="secondary">Заказ</Button></Link>
+              <Link to="/about"><Button variant="secondary">Контакты</Button></Link>
             </div>
           </div>
           <div className="aspect-video rounded-lg overflow-hidden">
