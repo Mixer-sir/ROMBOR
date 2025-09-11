@@ -18,6 +18,12 @@ export function ProductCard({ product }: { product: Product }) {
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                onError={(e) => {
+                  const t = e.currentTarget as HTMLImageElement & { dataset: any };
+                  if (t.dataset.fallback) return;
+                  t.dataset.fallback = "1";
+                  t.src = "/placeholder.svg";
+                }}
               />
             </div>
             <div className="p-4">
@@ -42,7 +48,12 @@ export function ProductCard({ product }: { product: Product }) {
                 {product.images.map((src, i) => (
                   <CarouselItem key={i}>
                     <div className="aspect-square overflow-hidden rounded-lg">
-                      <img src={src} alt={`${product.name} фото ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={src} alt={`${product.name} фото ${i + 1}`} className="w-full h-full object-cover" loading="lazy" onError={(e) => {
+                        const t = e.currentTarget as HTMLImageElement & { dataset: any };
+                        if (t.dataset.fallback) return;
+                        t.dataset.fallback = "1";
+                        t.src = "/placeholder.svg";
+                      }} />
                     </div>
                   </CarouselItem>
                 ))}
