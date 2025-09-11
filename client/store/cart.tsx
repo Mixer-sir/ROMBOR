@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import type { Product } from "../data/products";
 
 export type CartItem = {
@@ -34,31 +35,52 @@ export type CartContextValue = {
   clear: () => void;
   count: number;
   total: number;
+  locked: boolean;
+  unlock: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<CartState>(() => loadInitial());
+  const [locked, setLocked] = useState(false);
 
   useEffect(() => {
     saveState(state);
   }, [state]);
 
   const value = useMemo<CartContextValue>(() => {
+    const unlock = () => setLocked(false);
+
     const add = (product: Product, qty = 1) => {
+      if (locked) {
+        toast.warning("Подтвердите предыдущее добавление", {
+          description: "Нажмите “Ок” в уведомлении, затем повторите.",
+        });
+        return;
+      }
       setState((s) => {
         const existing = s.items.find((i) => i.product.id === product.id);
         if (existing) {
-          return {
+          s = {
             items: s.items.map((i) =>
               i.product.id === product.id
                 ? { ...i, quantity: Math.min(99, i.quantity + qty) }
                 : i,
             ),
-          };
+          } as CartState;
+        } else {
+          s = { items: [...s.items, { product, quantity: qty }] } as CartState;
         }
-        return { items: [...s.items, { product, quantity: qty }] };
+        return s;
+      });
+      setLocked(true);
+      toast.success("Товар добавлен в корзину", {
+        description: product.name,
+        action: {
+          label: "Ок",
+          onClick: () => unlock(),
+        },
       });
     };
 
@@ -79,8 +101,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const count = state.items.reduce((sum, i) => sum + i.quantity, 0);
     const total = state.items.reduce((sum, i) => sum + i.quantity * i.product.price, 0);
 
-    return { items: state.items, add, remove, setQty, clear, count, total };
-  }, [state]);
+    return { items: state.items, add, remove, setQty, clear, count, total, locked, unlock };
+  }, [state, locked]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
