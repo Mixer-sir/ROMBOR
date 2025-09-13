@@ -1,0 +1,57 @@
+name: Build docs for GitHub Pages (branch)
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Build with base for Pages
+        env:
+          BASE_PATH: ${{ vars.GH_PAGES_BASE || format('/{0}/', github.event.repository.name) }}
+        run: pnpm run build:client
+
+      - name: Prepare docs folder
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r dist/spa/* docs/
+          cp docs/index.html docs/404.html
+
+      - name: Commit docs
+        run: |
+          if [ -n "$(git status --porcelain docs)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs
+            git commit -m "chore(pages): update docs [skip ci]"
+            git push
+          else
+            echo "No changes in docs"
+          fi
