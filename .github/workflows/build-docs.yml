@@ -2,9 +2,9 @@ name: Build docs for GitHub Pages (branch)
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'docs/**'
+      - "docs/**"
   workflow_dispatch:
 
 permissions:
